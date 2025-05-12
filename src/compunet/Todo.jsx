@@ -113,10 +113,11 @@ const Todo = ({ onBack }) => {
   });
 
   return (
-    <div className="h-screen bg-white p-6">
+    <div className="min-h-screen bg-white p-4 md:p-6">
+      {/* Add/Edit Task Form Modal */}
       {showAddTaskForm && (
-        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-4 md:p-6 rounded-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <button
                 onClick={() => {
@@ -129,7 +130,7 @@ const Todo = ({ onBack }) => {
               </button>
               <button
                 onClick={editingTask ? handleUpdateTask : handleAddTask}
-                className="w-[75px] bg-amber-950 text-white py-2 rounded hover:bg-amber-600"
+                className="w-20 bg-amber-950 text-white py-2 rounded hover:bg-amber-600"
               >
                 {editingTask ? "Update" : "Add"}
               </button>
@@ -172,7 +173,7 @@ const Todo = ({ onBack }) => {
 
             <div className="mb-6">
               <label className="block text-gray-700 mb-2">Tags</label>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {["work", "study", "entertainment", "family"].map(
                   (category) => (
                     <button
@@ -190,7 +191,7 @@ const Todo = ({ onBack }) => {
                       <span
                         className={`w-3 h-3 rounded-full ${
                           category === "work"
-                            ? "bg-purple-300 "
+                            ? "bg-purple-300"
                             : category === "study"
                             ? "bg-blue-300"
                             : category === "entertainment"
@@ -208,33 +209,36 @@ const Todo = ({ onBack }) => {
         </div>
       )}
 
+      {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-semibold text-gray-800">todo</h1>
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-800">todo</h1>
         <button
           onClick={() => {
             setEditingTask(null);
             setShowAddTaskForm(true);
           }}
-          className="text-3xl text-gray-600 hover:text-gray-800"
+          className="text-2xl md:text-3xl text-gray-600 hover:text-gray-800"
         >
           <BiPlus />
         </button>
       </div>
 
-      <div className="flex gap-6">
-        <div className="w-1/5">
-          <ul className="space-y-4">
+      {/* Main Content */}
+      <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+        {/* Sidebar - Moves to top on mobile */}
+        <div className="w-full md:w-1/5">
+          <ul className="space-y-2 md:space-y-4">
             <button
               onClick={onBack}
-              className="text-gray-600 hover:text-gray-800"
+              className="text-gray-600 hover:text-gray-800 mb-2 md:mb-0"
             >
               ← Back
             </button>
             {["work", "study", "entertainment", "family"].map((category) => (
               <li
                 key={category}
-                className={`flex items-center gap-2 cursor-pointer ${
-                  selectedCategory === category ? "font-bold" : ""
+                className={`flex items-center gap-2 cursor-pointer p-2 rounded ${
+                  selectedCategory === category ? "font-bold bg-gray-100" : ""
                 }`}
                 onClick={() =>
                   setSelectedCategory(
@@ -243,7 +247,7 @@ const Todo = ({ onBack }) => {
                 }
               >
                 <span
-                  className={`w-7 h-7 rounded-full ${
+                  className={`w-5 h-5 md:w-7 md:h-7 rounded-full ${
                     category === "work"
                       ? "bg-purple-300"
                       : category === "study"
@@ -258,8 +262,7 @@ const Todo = ({ onBack }) => {
             ))}
           </ul>
 
-          
-          <div className="mt-6">
+          <div className="mt-4 md:mt-6 p-2">
             <label className="flex items-center gap-2 text-sm text-gray-700">
               <input
                 type="checkbox"
@@ -270,21 +273,28 @@ const Todo = ({ onBack }) => {
             </label>
           </div>
 
-          <div className="mt-10 text-center text-3xl mr-[190px] w-35"> <img src="https://www.idolgroup.com.bd/_next/image?url=/_next/static/media/i-introduction.f742dab9.png&w=828&q=75" alt="" /></div>
+          <div className="mt-6 md:mt-10 text-center">
+            <img 
+              src="https://www.idolgroup.com.bd/_next/image?url=/_next/static/media/i-introduction.f742dab9.png&w=828&q=75" 
+              alt="" 
+              className="w-20 h-20 md:w-32 md:h-32 mx-auto"
+            />
+          </div>
         </div>
 
+        {/* Tasks Grid - Full width on mobile */}
         <div className="flex-1">
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
             {filteredTasks.map((task) => (
               <div
                 key={task.id}
-                className={`w-full md:w-[48%] bg-yellow-100 p-4 rounded shadow-md h-40 ${
+                className={`bg-yellow-100 p-3 md:p-4 rounded shadow-md min-h-32 ${
                   task.done ? "opacity-60" : ""
                 }`}
               >
                 <div className="flex justify-between items-start">
                   <h2
-                    className={`font-bold text-lg ${
+                    className={`font-bold text-base md:text-lg ${
                       task.done ? "line-through" : ""
                     }`}
                   >
@@ -292,24 +302,31 @@ const Todo = ({ onBack }) => {
                   </h2>
                   <div className="relative">
                     <button
-                      onClick={() =>
-                        setMenuOpen(menuOpen === task.id ? null : task.id)
-                      }
-                      className="text-gray-500 hover:text-gray-700 text-xl"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMenuOpen(menuOpen === task.id ? null : task.id);
+                      }}
+                      className="text-gray-500 hover:text-gray-700 text-lg md:text-xl"
                     >
                       <BiDotsVerticalRounded />
                     </button>
                     {menuOpen === task.id && (
-                      <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                      <div className="absolute right-0 mt-1 w-28 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                         <button
-                          onClick={() => handleEditClick(task)}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditClick(task);
+                          }}
+                          className="block w-full text-left px-3 py-1.5 text-xs md:text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Edit
                         </button>
                         <button
-                          onClick={() => handleDeleteTask(task.id)}
-                          className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteTask(task.id);
+                          }}
+                          className="block w-full text-left px-3 py-1.5 text-xs md:text-sm text-red-600 hover:bg-gray-100"
                         >
                           Delete
                         </button>
@@ -318,30 +335,33 @@ const Todo = ({ onBack }) => {
                   </div>
                 </div>
                 <p
-                  className={`text-sm text-gray-700 mt-1 ${
+                  className={`text-xs md:text-sm text-gray-700 mt-1 ${
                     task.done ? "line-through" : ""
                   }`}
                 >
-                  {task.description}
+                  {task.description.length > 100 
+                    ? `${task.description.substring(0, 100)}...` 
+                    : task.description}
                 </p>
-                <div className="flex items-center gap-2 mt-3">
+                <div className="flex items-center gap-2 mt-2 md:mt-3">
                   {task.categories.includes("work") && (
-                    <span className="w-4 h-4 bg-purple-300 rounded-full" />
+                    <span className="w-3 h-3 md:w-4 md:h-4 bg-purple-300 rounded-full" />
                   )}
                   {task.categories.includes("study") && (
-                    <span className="w-4 h-4 bg-blue-300 rounded-full" />
+                    <span className="w-3 h-3 md:w-4 md:h-4 bg-blue-300 rounded-full" />
                   )}
                   {task.categories.includes("entertainment") && (
-                    <span className="w-4 h-4 bg-red-300 rounded-full" />
+                    <span className="w-3 h-3 md:w-4 md:h-4 bg-red-300 rounded-full" />
                   )}
                   {task.categories.includes("family") && (
-                    <span className="w-4 h-4 bg-gray-400 rounded-full" />
+                    <span className="w-3 h-3 md:w-4 md:h-4 bg-gray-400 rounded-full" />
                   )}
-                  <label className="ml-auto flex items-center gap-1 text-sm text-gray-700">
+                  <label className="ml-auto flex items-center gap-1 text-xs md:text-sm text-gray-700">
                     <input
                       type="checkbox"
                       checked={task.done}
                       onChange={() => toggleTaskDone(task.id)}
+                      className="w-3 h-3 md:w-4 md:h-4"
                     />
                     Done
                   </label>
