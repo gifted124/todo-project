@@ -38,12 +38,13 @@ const TodoScreen = ({ onStart }) => {
             transition: 'transform 2s ease-out'
           }}
         >
-          <h1 className="text-4xl font-semibold text-gray-800 line-through">todo</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 line-through">todo</h1>
         </div>
       )}
+      
       <div 
         ref={containerRef}
-        className={`h-full w-full flex flex-col items-center justify-center p-8 text-center ${
+        className={`h-full w-full flex flex-col items-center justify-center p-4 md:p-8 text-center ${
           showFirst ? "opacity-100" : "animate-fadeIn"
         }`}
         style={{
@@ -51,12 +52,12 @@ const TodoScreen = ({ onStart }) => {
           transition: 'transform 2s ease-out'
         }}
       >
-        {/* Rest of your content */}
-        <div className="flex mb-6">
+        {/* Colorful todo letters */}
+        <div className="flex mb-4 md:mb-6">
           {['t', 'o', 'd', 'o'].map((letter, index) => (
             <h1 
               key={index}
-              className="text-4xl font-semibold"
+              className="text-2xl md:text-4xl font-semibold"
               style={{
                 color: ['#c9e1f2', '#f6d0d5', '#d4edd1', '#cec6f3'][index]
               }}
@@ -66,60 +67,64 @@ const TodoScreen = ({ onStart }) => {
           ))}
         </div>
 
-        <p className="text-gray-700 mb-2">
+        {/* Description text */}
+        <p className="text-sm md:text-base text-gray-700 mb-2 px-2">
           Lorem ipsum dolor sit amet, consectetur sadipscing elit,
         </p>
-        <p className="text-gray-700 mb-8">
+        <p className="text-sm md:text-base text-gray-700 mb-4 md:mb-8 px-2">
           sed diam nonumy eirmod tempor invidunt ut labore et
         </p>
 
+        {/* Get Started button */}
         <button 
           onClick={onStart}
-          className="bg-[#5d594e] hover:bg-[#6d695e] text-white px-6 py-3 rounded-md mb-4 transition-colors"
+          className="bg-[#5d594e] hover:bg-[#6d695e] text-white px-4 py-2 md:px-6 md:py-3 rounded-md mb-4 transition-colors text-sm md:text-base"
         >
           Get Started
         </button>
 
-        <div className="flex w-[20%] mr-[5%]">
+        {/* Image row */}
+        <div className="flex w-full md:w-[80%] lg:w-[60%] xl:w-[40%] justify-center gap-2 md:gap-4 mb-4">
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWn6sHcYCVlRriHeVAYoXv5FQ3p9DwVtvoFA&s" 
-            className="w-[40%] h-[100px]" 
+            className="w-1/3 h-16 md:h-24 object-contain" 
             alt="" 
           />
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz4Jlfs09g1BKoqeGxuDLQARrHYA8cGjECUA&s" 
-            className="w-[40%] h-[100px]" 
+            className="w-1/3 h-16 md:h-24 object-contain" 
             alt="" 
           />
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvZJI7s-9LceUxieVXNZxhquudictce1md-A&s"  
-            className="w-[40%] h-[100px]" 
+            className="w-1/3 h-16 md:h-24 object-contain" 
             alt="" 
           />
         </div>
 
-        <div className="bg-[rgb(254,247,218)] w-[30%] h-[100px]">
-          <div className="flex justify-around mt-1">
-            <a href="#" className="text-[#5d594e] line-through pr-[90px]">
+        {/* Todo card */}
+        <div className="bg-[rgb(254,247,218)] w-full md:w-[80%] lg:w-[60%] xl:w-[40%] p-3 md:p-4 h-24 md:h-32">
+          <div className="flex justify-between items-center">
+            <a href="#" className="text-[#5d594e] line-through text-xs md:text-sm">
               Download todo app   
             </a>
-            <p className="pl-[40px] mr-[4%]">...</p>
+            <p className="text-gray-500">...</p>
           </div>
-          <div className="mt-[10px]">
-            <a href="#" className="text-[#5d594e] line-through mr-[55%] text-[11px]">
+          <div className="mt-1 md:mt-2">
+            <a href="#" className="text-[#5d594e] line-through text-[10px] md:text-xs">
               the first step for better life
             </a>
           </div>
 
-          <div className="flex items-center justify-center space-x-19">
-            <div className="flex space-x-2 mr-[225px] mt-[10px]">
-              <div className="w-5 h-5 rounded-full bg-[#c9e1f2]"></div>
-              <div className="w-5 h-5 rounded-full bg-[#f6d0d5]"></div>
+          <div className="flex items-center justify-between mt-2 md:mt-4">
+            <div className="flex gap-1 md:gap-2">
+              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#c9e1f2]"></div>
+              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-[#f6d0d5]"></div>
             </div>
-            <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-[7px]">
+            <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-green-100 flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-5 text-green-600"
+                className="h-3 w-3 md:h-4 md:w-4 text-green-600"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
