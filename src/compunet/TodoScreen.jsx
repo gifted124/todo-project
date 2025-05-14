@@ -131,7 +131,7 @@ const TodoScreen = ({ onStart }) => {
             />
           </div>
 
-          <div className="bg-[rgb(254,247,218)] w-full md:w-[80%] lg:w-[80%] xl:w-[40%] p-3 md:p-4 h-24 md:h-32 ml-[50px]">
+          <div className="bg-[rgb(254,247,218)] w-full md:w-[80%] lg:w-[80%] xl:w-[40%] p-3 md:p-4 h-24 md:h-32 ml-[40px]">
             <div className="flex justify-between items-center">
               <a href="#" className="text-[#5d594e] line-through text-xs md:text-sm">
                 Download todo app
